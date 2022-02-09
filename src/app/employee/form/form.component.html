@@ -13,7 +13,7 @@
   <br>
     <label for="nationalId">NationalId:</label>
     <input id="nationalId" type="text" name="nationalId" [(ngModel)]="formData.nationalId">
-    <div  style="color:red;" *ngIf="empty">{{error}}</div>
+    <div  style="color:red;" *ngIf="emptyId">{{error}}</div>
     
     <br>
     <label for="branch">Branch: </label>

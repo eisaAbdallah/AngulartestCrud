@@ -20,8 +20,8 @@ error!:string;
 errorTwo!:string;
   employees: EmployeeData[] = [];
   formData!: any ;
-  empty:boolean=false;
-  
+  emptyId:boolean=false;
+
   emptyName:boolean=false;
   branchIdparam!: number;
   constructor(private employeeService: EmployeeService,private router: Router,private fb:FormBuilder) {  }
@@ -46,14 +46,20 @@ this.employeeService.getEmployees().subscribe(
   }
 
 addEmployees(){
+
+
+  
 this.branchIdparam=this.formData.branchId; 
+if(this.branchIdparam===undefined){
+  this.branchIdparam=0;
+}
 
 
 this.employeeService.addEmployee(this.formData,this.branchIdparam).subscribe(
 
 ()=>{
 
-  this.router.navigate(['/employees']);
+  this.router.navigateByUrl('');
  
 },
 (err)=>{
@@ -62,13 +68,21 @@ this.employeeService.addEmployee(this.formData,this.branchIdparam).subscribe(
 
 
 if(err.error==="The National Id Should be 16 Digits"&&err.error!=null){
-this.empty=true;
+this.emptyId=true;
 this.error=err.error;
 }else{
-this.empty=false;
+this.emptyId=false;
 
 
 }
+if(this.formData.nationalId===undefined){
+  this.emptyId=true;
+  this.error=err.error;
+  }else{
+  this.emptyId=false;
+  
+  
+  }
 if(err.error==="Only Arabic name Allowed"&&err.error!=null){
   this.emptyName=true;
   this.errorTwo=err.error;
@@ -76,7 +90,15 @@ if(err.error==="Only Arabic name Allowed"&&err.error!=null){
   this.emptyName=false;
   
   }
-  
+  if(this.formData.name===undefined){
+    this.emptyName=true;
+    this.errorTwo="Only Arabic name Allowed";
+    }else{
+    this.emptyName=false;
+    
+    }
+
+
 }
 );
 
