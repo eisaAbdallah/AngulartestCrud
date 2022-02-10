@@ -54,20 +54,23 @@ if(this.branchIdparam===undefined){
   this.branchIdparam=0;
 }
 
+if(this.formData.name===undefined){
+
+  this.formData.name="worng";
+}
 
 this.employeeService.addEmployee(this.formData,this.branchIdparam).subscribe(
 
 ()=>{
-
-  this.router.navigateByUrl('');
+  this.router.navigate(['/employees']);
+  
  
 },
 (err)=>{
  
 
 
-
-if(err.error==="The National Id Should be 16 Digits"&&err.error!=null){
+if(err.error==="The National Id Should be 16 Digits"){
 this.emptyId=true;
 this.error=err.error;
 }else{
@@ -77,15 +80,15 @@ this.emptyId=false;
 }
 if(this.formData.nationalId===undefined){
   this.emptyId=true;
-  this.error=err.error;
+  this.error="The National Id Should be 16 Digits";
   }else{
   this.emptyId=false;
   
   
   }
-if(err.error==="Only Arabic name Allowed"&&err.error!=null){
+if(err.error==="Only Arabic name Allowed"){
   this.emptyName=true;
-  this.errorTwo=err.error;
+  this.errorTwo="Only Arabic name Allowed";
   }else{
   this.emptyName=false;
   
@@ -113,5 +116,5 @@ deleteEmployee(id:number){
   
   }
 
-
+  
   }
